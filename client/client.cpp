@@ -107,6 +107,7 @@ std::string file_data;
 void directory_recurse(fs::path& dir){
     if(fs::exists(dir) && fs::is_directory(dir)){
         fs::directory_iterator end;
+        bool posted_path = false;
         for(fs::directory_iterator it(dir); it != end; ++it){
             if(fs::is_regular_file(*it)){
                 bool valid_ext = extensions.size() == 0;
@@ -117,7 +118,11 @@ void directory_recurse(fs::path& dir){
                     }
                 }
                 if(valid_ext){
-                    printf("%s\n", (*it).path().string().c_str());
+                    if(!posted_path){
+                        posted_path = true;
+                        file_data.append(dir.string().c_str());
+                        file_data.append("\n");
+                    }
                     file_data.append((*it).path().filename().c_str());
                     file_data.append(";");
                     char size[25];

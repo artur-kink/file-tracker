@@ -18,6 +18,7 @@ create table files(
 	computer int not null,
 	name nvarchar(255) not null,
 	extension nvarchar(10),
+	path nvarchar(255),
 	size long,
 	create_date datetime,
 	modified_date datetime,
