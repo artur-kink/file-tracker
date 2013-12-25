@@ -8,6 +8,8 @@ if($name && strlen($name) < 25 && strlen($name) > 0){
         echo $response->id;
         echo "\n";
         echo $response->auth_key;
+        $mysqli->next_result();
+        mysqli_free_result($result);
     }else{
         header("HTTP/1.0 404 Not Found");
     }

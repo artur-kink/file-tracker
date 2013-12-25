@@ -12,8 +12,12 @@ $files = explode("\n", $body);
 require "db.php";
 $result = $mysqli->query("call check_authentication(" . $id . ",'" . $authkey . "');");
 if($result){
+    //Free procedure result.
     $mysqli->next_result();
     mysqli_free_result($result);
+
+    //Remove existing file information.
+    $mysqli->query("delete from files where computer = " . $id . ";");
 
     $path = "";
     foreach($files as $file){

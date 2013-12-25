@@ -26,13 +26,21 @@ create table files(
 	foreign key (computer) references computers(id)
 );
 
+create view detailed_files as(
+	select f.*, c.name as computer_name
+	from files f
+	inner join computers c on c.id = f.computer
+);
+
+
 delimiter $$
-create procedure register_computer(IN name nvarchar(25), IN ip nvarchar(16), IN host nvarchar(100))
+create procedure register_computer(IN in_name nvarchar(25), IN in_ip nvarchar(16),
+	IN in_host nvarchar(100))
 begin
-	if (select count(*) from computers c where c.ip = ip and c.name = name) > 0 then
-		select id, auth_key from computers c where c.ip = ip and c.name = name;
+	if (select count(*) from computers c where c.ip = in_ip and c.name = in_name) > 0 then
+		select id, auth_key from computers c where c.ip = in_ip and c.name = in_name;
 	else
-		insert into computers(name, ip, host, auth_key) values(name, ip, host, 'temp');
+		insert into computers(name, ip, host, auth_key) values(in_name, in_ip, in_host, 'temp');
 		
 		select id, auth_key from computers
 		where id = last_insert_id();
