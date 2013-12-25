@@ -15,6 +15,7 @@ namespace fs = boost::filesystem;
 
 std::vector<std::string> extensions;
 
+char client_name[25];
 int id;
 char authkey[255];
 
@@ -42,7 +43,7 @@ void register_client(){
     // allow us to treat all data up until the EOF as the content.
     boost::asio::streambuf request;
     std::ostream request_stream(&request);
-    request_stream << "GET " << "/register.php?name=client" << " HTTP/1.0\r\n";
+    request_stream << "GET " << "/register.php?name=" << client_name << " HTTP/1.0\r\n";
     request_stream << "Host: " << "127.0.0.1" << "\r\n";
     request_stream << "Accept: */*\r\n";
     request_stream << "Connection: close\r\n\r\n";
@@ -231,11 +232,13 @@ void post_files(){
 int main(int argc, char** argv){
 
     int opt = 0;
-    while ((opt = getopt(argc, argv, "e:")) != -1){
+    while ((opt = getopt(argc, argv, "en:")) != -1){
         switch (opt){
             case 'e':
                 extensions.push_back(optarg);
                 break;
+            case 'n':
+                std::strncpy(client_name, optarg, 25);
         }
     }
 
