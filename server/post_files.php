@@ -18,8 +18,14 @@ if($result){
     foreach($files as $file){
         if(strlen($file) > 0){
             echo $file . "\n";
-            $mysqli->query("insert into files(computer, name) values(" . $id . ",'" . $file . "');");
-            echo "CALL failed: (" . $mysqli->errno . ") " . $mysqli->error;
+            $file_info = explode(";", $file);
+            $file_ext = "";
+            if(strripos($file_info[0], '.') !== FALSE){
+                $file_ext = substr($file_info[0], strripos($file_info[0], '.'));
+            }
+            $mysqli->query("insert into files(computer, name, extension, size, modified_date)" .
+                "values(" . $id . ",'" . $file_info[0] . "', '" . $file_ext . "', " . $file_info[1] .
+                ", '" . gmdate("Y-m-d H:i:s", $file_info[2]) ."');");
         }
     }
 }else{

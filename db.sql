@@ -18,9 +18,10 @@ create table files(
 	computer int not null,
 	name nvarchar(255) not null,
 	extension nvarchar(10),
+	size long,
 	create_date datetime,
 	modified_date datetime,
-	added_date timestamp,
+	added_date timestamp DEFAULT CURRENT_TIMESTAMP,
 	foreign key (computer) references computers(id)
 );
 

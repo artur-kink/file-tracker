@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <cstdlib>
 
 #include <vector>
 #include <string>
@@ -118,6 +119,15 @@ void directory_recurse(fs::path& dir){
                 if(valid_ext){
                     printf("%s\n", (*it).path().string().c_str());
                     file_data.append((*it).path().filename().c_str());
+                    file_data.append(";");
+                    char size[25];
+                    sprintf(size, "%d", (unsigned int)fs::file_size((*it).path()));
+                    file_data.append(size);
+                    file_data.append(";");
+                    std::time_t modified_date = fs::last_write_time((*it).path());
+                    char time[25];
+                    sprintf(time, "%d", modified_date);
+                    file_data.append(time);
                     file_data.append("\n");
                     files.push_back((*it).path());
                 }
@@ -158,7 +168,7 @@ void post_files(){
     request_stream << "Accept: */*\r\n";
     request_stream << "Connection: close\r\n";
     request_stream << "Content-Type: application/x-www-form-urlencoded\r\n";
-    request_stream << "Content-Length: " << (18 + file_data.length()) << "\r\n\r\n";
+    request_stream << "Content-Length: " << (23 + file_data.length()) << "\r\n\r\n";
     request_stream << "id=" << id << "&auth_key=" << authkey << "&body=" << file_data;
     std::cout << file_data;
     // Send the request.
