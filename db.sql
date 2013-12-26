@@ -5,7 +5,7 @@ use file_tracker;
 
 create table computers(
 	id int primary key AUTO_INCREMENT,
-	name nvarchar(25),
+	name nvarchar(25) not null unique,
 	ip nvarchar(16),
 	host nvarchar(100),
 	auth_key nvarchar(255),
@@ -23,7 +23,7 @@ create table files(
 	create_date datetime,
 	modified_date datetime,
 	added_date timestamp DEFAULT CURRENT_TIMESTAMP,
-	foreign key (computer) references computers(id)
+	foreign key (computer) references computers(id) on delete cascade
 );
 
 create view detailed_files as(

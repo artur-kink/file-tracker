@@ -4,7 +4,7 @@
     </head>
     <body>
         <table>
-            <thead><tr><th>Computer</th><th>File</th><th>Size</th><th>Modified Date</th></thead>
+            <thead><tr><th>Computer</th><th>File</th><th>Size</th><th>Modified Date</th></tr></thead>
             <tbody>
 <?php
 require "db.php";
