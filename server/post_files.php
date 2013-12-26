@@ -16,7 +16,8 @@ if($result){
     $mysqli->next_result();
     mysqli_free_result($result);
 
-    //Remove existing file information.
+    //Move existing file info into archive.
+    $mysqli->query("insert into file_archive select * from files where computer = " . $id . ";");
     $mysqli->query("delete from files where computer = " . $id . ";");
 
     $path = "";
