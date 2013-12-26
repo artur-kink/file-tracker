@@ -12,7 +12,9 @@ if($ip && $name){
 
 ?>
 <form method="GET">
+    <label for="name">Name: </label>
     <input name="name" type="text"/>
+    <label for="ip">ip Address: </label>
     <input name="ip" type="text"/>
     <input type="submit" value="Add"/>
 </form>

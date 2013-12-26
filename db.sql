@@ -48,10 +48,13 @@ create view detailed_files as(
 
 delimiter $$
 create procedure register_computer(IN in_name nvarchar(25), IN in_ip nvarchar(16),
-	IN in_host nvarchar(100))
+	IN in_host nvarchar(100), IN in_auth_key nvarchar(255))
 begin
 	if (select count(*) from computers c where c.ip = in_ip and c.name = in_name) > 0 then
-		update computers c set last_register_date = NOW() where c.ip = in_ip and c.name = in_name;
+		update computers c
+		set last_register_date = NOW(), c.auth_key = in_auth_key
+		where c.ip = in_ip and c.name = in_name;
+		
 		select id, auth_key from computers c where c.ip = in_ip and c.name = in_name;
 	else
 		select 0, 0;
