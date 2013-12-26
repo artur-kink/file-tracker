@@ -5,7 +5,7 @@ $ip = $_GET["ip"];
 
 if($ip && $name){
     require "db.php";
-    $mysqli->query("insert into computers(name, ip, auth_key) values('" . $name . "', '" . $ip . "', 'temp');");
+    $mysqli->query("insert into computers(name, ip) values('" . $name . "', '" . $ip . "');");
 
     header("Location: computers.php");
 }

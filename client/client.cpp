@@ -174,7 +174,7 @@ void post_files(){
     request_stream << "Accept: */*\r\n";
     request_stream << "Connection: close\r\n";
     request_stream << "Content-Type: application/x-www-form-urlencoded\r\n";
-    request_stream << "Content-Length: " << (23 + file_data.length()) << "\r\n\r\n";
+    request_stream << "Content-Length: " << (19 + strlen(authkey) + file_data.length()) << "\r\n\r\n";
     request_stream << "id=" << id << "&auth_key=" << authkey << "&body=" << file_data;
     std::cout << file_data;
     // Send the request.
