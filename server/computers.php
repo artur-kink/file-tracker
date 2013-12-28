@@ -3,7 +3,7 @@
     <title>Computers</title>
     </head>
     <body>
-        <a href="add_computer.php">Add Computer</a>
+        <a href="computer.php">Add Computer</a>
         <table>
             <thead>
                 <tr>
@@ -23,7 +23,7 @@ $computers = $mysqli->query("select * from computers;");
 if($computers){
     while($row = $computers->fetch_object()){
         echo "<tr>";
-        echo "<td>" . $row->name . "</td>";
+        echo "<td><a href='computer.php?id=" . $row->id . "'>" . $row->name . "</a></td>";
         echo "<td>" . $row->ip . "</td>";
         echo "<td>" . $row->paths . "</td>";
         echo "<td>" . $row->extensions . "</td>";
