@@ -17,6 +17,7 @@ std::vector<std::string> extensions;
 std::vector<std::string> paths;
 
 char client_name[25];
+char address[255];
 int id;
 char authkey[255];
 
@@ -25,7 +26,7 @@ void register_client(){
 
     // Get a list of endpoints corresponding to the server name.
     ip::tcp::resolver resolver(io_service);
-    ip::tcp::resolver::query query("127.0.0.1", "http");
+    ip::tcp::resolver::query query(address, "http");
     ip::tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
     ip::tcp::resolver::iterator end;
 
@@ -45,7 +46,7 @@ void register_client(){
     boost::asio::streambuf request;
     std::ostream request_stream(&request);
     request_stream << "GET " << "/register.php?name=" << client_name << " HTTP/1.0\r\n";
-    request_stream << "Host: " << "127.0.0.1" << "\r\n";
+    request_stream << "Host: " << address << "\r\n";
     request_stream << "Accept: */*\r\n";
     request_stream << "Connection: close\r\n\r\n";
 
@@ -166,7 +167,7 @@ void post_files(){
 
     // Get a list of endpoints corresponding to the server name.
     ip::tcp::resolver resolver(io_service);
-    ip::tcp::resolver::query query("127.0.0.1", "http");
+    ip::tcp::resolver::query query(address, "http");
     ip::tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
     ip::tcp::resolver::iterator end;
 
@@ -186,7 +187,7 @@ void post_files(){
     boost::asio::streambuf request;
     std::ostream request_stream(&request);
     request_stream << "POST " << "/post_files.php" << " HTTP/1.1\r\n";
-    request_stream << "Host: " << "127.0.0.1" << "\r\n";
+    request_stream << "Host: " << address << "\r\n";
     request_stream << "Accept: */*\r\n";
     request_stream << "Connection: close\r\n";
     request_stream << "Content-Type: application/x-www-form-urlencoded\r\n";
@@ -246,12 +247,19 @@ void post_files(){
 }
 
 int main(int argc, char** argv){
-
+    client_name[0] = 0;
+    address[0] = 0;
     int opt = 0;
-    while ((opt = getopt(argc, argv, "n:")) != -1){
+    while ((opt = getopt(argc, argv, "n:i:")) != -1){
         switch (opt){
             case 'n':
                 std::strncpy(client_name, optarg, 25);
+                std::cout << "Client Name: " << client_name << std::endl;
+                break;
+            case 'i':
+                std::strncpy(address, optarg, 255);
+                std::cout << "Address: " << address << std::endl;
+                break;
         }
     }
 
