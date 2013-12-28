@@ -14,6 +14,7 @@ namespace ip = boost::asio::ip;
 namespace fs = boost::filesystem;
 
 std::vector<std::string> extensions;
+std::vector<std::string> paths;
 
 char client_name[25];
 int id;
@@ -89,6 +90,21 @@ void register_client(){
     std::getline(response_stream, line);
     std::strncpy(authkey, line.c_str(), 255);
     std::cout << "Auth Key: " << authkey << std::endl;
+    std::getline(response_stream, line);
+
+    char * pch;
+    pch = strtok((char*)line.c_str(), ";");
+    while (pch != NULL){
+      paths.push_back(std::string(pch));
+      pch = strtok(NULL, ";");
+    }
+
+    std::getline(response_stream, line);
+    pch = strtok((char*)line.c_str(), ";");
+    while (pch != NULL){
+      extensions.push_back(std::string(pch));
+      pch = strtok(NULL, ";");
+    }
 
     // Write whatever content we already have to output.
     if (response.size() > 0)
@@ -232,11 +248,8 @@ void post_files(){
 int main(int argc, char** argv){
 
     int opt = 0;
-    while ((opt = getopt(argc, argv, "en:")) != -1){
+    while ((opt = getopt(argc, argv, "n:")) != -1){
         switch (opt){
-            case 'e':
-                extensions.push_back(optarg);
-                break;
             case 'n':
                 std::strncpy(client_name, optarg, 25);
         }
@@ -244,12 +257,12 @@ int main(int argc, char** argv){
 
     register_client();
     
-    for(int i = optind; i < argc; i++){
-        fs::path dir(argv[i]);
-        files.clear();
+    for(int i = 0; i < paths.size(); i++){
+        fs::path dir(paths.at(i));
         directory_recurse(dir);
-        post_files();
     }
+
+    post_files();
 
     return 0;
 }

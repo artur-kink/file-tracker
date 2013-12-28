@@ -9,6 +9,8 @@ create table computers(
 	ip nvarchar(16),
 	host nvarchar(100),
 	auth_key nvarchar(255),
+	paths nvarchar(255) default '/',
+	extensions nvarchar(255),
 	last_register_date datetime,
 	last_activity_date TIMESTAMP not null default CURRENT_TIMESTAMP
 );
@@ -55,9 +57,11 @@ begin
 		set last_register_date = NOW(), c.auth_key = in_auth_key
 		where c.ip = in_ip and c.name = in_name;
 		
-		select id, auth_key from computers c where c.ip = in_ip and c.name = in_name;
+		select id, auth_key, paths, extensions
+		from computers c 
+		where c.ip = in_ip and c.name = in_name;
 	else
-		select 0, 0;
+		select 0, 0, 0, 0;
 	end if;
 end$$
 

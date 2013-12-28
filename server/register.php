@@ -17,6 +17,11 @@ if($name && strlen($name) < 25 && strlen($name) > 0){
         echo $response->id;
         echo "\n";
         echo $response->auth_key;
+        echo "\n";
+        echo $response->paths;
+        echo "\n";
+        echo $response->extensions;
+        echo "\n";
         $mysqli->next_result();
         $mysqli->next_result();
         mysqli_free_result($result);
