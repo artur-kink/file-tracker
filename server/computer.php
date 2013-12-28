@@ -6,14 +6,14 @@ $ip = $_GET["ip"];
 $paths = $_GET["paths"];
 $extensions = $_GET["extensions"];
 
-if(!$id && $ip && $name && $paths && $extensions){
+if(!$id && $ip && $name && $paths){
     require "db.php";
     $mysqli->query("insert into computers(name, ip, paths, extensions)" .
         "values('" . $name . "', '" . $ip . "', '" . $paths . "', '" . $extensions . "');");
 
     header("Location: computers.php");
     exit();
-}else if($id && $ip && $name && $paths && $extensions){
+}else if($id && $ip && $name && $paths){
     require "db.php";
     $mysqli->query("update computers set name = '" . $name . "', ip = '" . $ip .
         "', paths = '" . $paths . "', extensions = '" . $extensions . "' where id = " . $id);
@@ -49,6 +49,7 @@ if(!$id && $ip && $name && $paths && $extensions){
 if($id){
     echo "<input type='hidden' name='id' value='" . $id . "'/>";
     echo "<input type='submit' value='Save'/>";
+    echo "<input type='button' value='Delete' onclick='window.location.href = \"delete_computer.php?id=" . $id . "\";'/>";
 }else{
     echo "<input type='submit' value='Add'/>";
 }
