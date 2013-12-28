@@ -29,7 +29,7 @@ if($computers){
         echo "<td>" . $row->extensions . "</td>";
         echo "<td>" . $row->last_register_date . "</td>";
         echo "<td>" . $row->last_activity_date . "</td>";
-        echo "<td><a href='delete_computer.php?id=" . $row->id . "'>Delete</a></td>";
+        echo "<td><a href='delete_computer.php?id=" . $row->id . "'><img src='images/delete.png' height='16px' width='16px' alt='Delete'></img></a></td>";
         echo "</tr>";
     }
 }
