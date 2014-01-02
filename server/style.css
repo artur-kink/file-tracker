@@ -1,0 +1,21 @@
+body{
+    color: #000000;
+}
+
+div.icon_button{
+
+}
+
+div.icon_button img{
+    width: 16px;
+    height: 16px;
+}
+
+a{
+    color: #000000;
+}
+
+a:hover{
+    color: #666666;
+}
+

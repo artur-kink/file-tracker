@@ -1,9 +1,10 @@
 <html>
     <head>
     <title>Computers</title>
+    <link rel="Stylesheet" type="text/css" href="style.css"/> 
     </head>
     <body>
-        <a href="computer.php">Add Computer</a>
+        <div class="icon_button"><a href="computer.php"><img src="images/add.png"/>Add Computer</a></div>
         <table>
             <thead>
                 <tr>
@@ -29,7 +30,7 @@ if($computers){
         echo "<td>" . $row->extensions . "</td>";
         echo "<td>" . $row->last_register_date . "</td>";
         echo "<td>" . $row->last_activity_date . "</td>";
-        echo "<td><a href='delete_computer.php?id=" . $row->id . "'><img src='images/delete.png' height='16px' width='16px' alt='Delete'></img></a></td>";
+        echo "<td><div class='icon_button'><a href='delete_computer.php?id=" . $row->id . "'><img src='images/delete.png' alt='Delete'></img></a></div></td>";
         echo "</tr>";
     }
 }
